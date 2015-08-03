@@ -1,0 +1,28 @@
+<div class="row" ng-app="InicioApp" ng-controller="MenuCtrl">
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Menú</div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <ul class="nav nav-tabs ">
+                    <li class="active"><a href="#menu" data-toggle="tab" ng-click="filtrarPor();">Ver todo</a></li>
+                    <li ><a href="#menu" data-toggle="tab" ng-click="filtrarPorPromociones();">Promociones</a></li>
+                    <li ng-repeat="tipo in tipoPlatos"><a href="#menu" data-toggle="tab" ng-click="filtrarPor(tipo);">{{tipo.descripcion}}</a></li>
+                </ul>
+                <div class="tab-pane fade in active" id="menu">
+                    <p></p>
+                    <div class="col-md-3" ng-repeat="producto in productos">
+                        <div class="thumbnail productosBox" >
+                            <div class="caption">
+                                <p class="titulo"><img ng-src="{{ getImagen(producto) }}" style="width: 78px;height: 68px;"></img></p>
+                                <p class="titulo">${{producto.precio}}</p>
+                                <p class="titulo">{{getDescripcion(producto)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> 

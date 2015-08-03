@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rest-aurant</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/estilos/mozoBootstrap.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body ng-app="PedidoApp" >
+        <div ng-controller="NavegacionMozoCtrl">
+            <nav class="navbar navbar-inverse" role="navigation" >
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Desplegar navegación</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">MOZOS</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav" ng-show="authenticated">
+                        <li><a href="#/pedido">Tomar Pedido</a></li>
+                        <li><a href="#/pedidoListo">Ver pedidos a entregar</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" role="login" ng-show="!authenticated">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="usuario" ng-model="credentials.username">
+                            <input type="password" class="form-control" placeholder="contraseña" ng-model="credentials.password">
+                        </div>
+                        <button class="btn btn-default" ng-click="clienteLogin()">Iniciar Sesión</button>
+                    </form>
+                    <form class="navbar-form navbar-right" role="login" ng-show="authenticated">
+                        <button class="btn btn-default" ng-click="clienteLogout()">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </nav>
+            <div class="alert alert-danger formulario center-block" style="width: 50%;" role="alert" ng-show="error">
+                <span class="error" >{{errores.passwordIncorrecto}}</span>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <ng-view></ng-view>
+        </div>
+        <script src="../js/jquery.js"></script>
+        <script src="../js/bootstrap.js"></script>
+        <script src="../bower_components/angular/angular.min.js"></script>
+        <script src="../bower_components/angular-route/angular-route.min.js"></script>
+        <script src="../js/jquery-ui/jquery-ui.min.js"></script>
+        <script src="../js/pedido.js"></script>
+        <script src="../js/reserva.js"></script>
+        <script src="../js/usuario.js"></script>
+        <script src="../js/app/pedidosListosApp.js"></script>
+        <script src="../js/app/pedidoApp.js"></script>
+    </body>
+</html>
+

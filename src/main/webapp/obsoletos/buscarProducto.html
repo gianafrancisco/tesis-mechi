@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html ng-app="BuscarProductoApp">
+    <head>
+        <title>Rest-aurant</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/listados.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/usuarioBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div >
+            <header>
+                <nav>
+                    <ul>
+                        <li><a href="#"><span class="primero"><i class="icon icon-home3"></i></span>Inicio</a></li>
+                        <li><a href="#"><span class="segundo"><i class="icon icon-user"></i></span>Usuarios</a>
+                            <ul>
+                                <li><a href="usuario.html">Nuevo</a></li>
+                                <li><a href="buscar.html">Buscar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="tercero"><i class="icon icon-food"></i></span>Productos</a>
+                            <ul>
+                                <li><a href="#">Ubicación</a></li>
+                                <li><a href="#">Mesa</a></li>
+                                <li><a href="#">Tipos de Plato</a></li>
+                                <li><a href="#">Plato</a></li>
+                                <li><a href="#">Bebida</a></li>
+                                <li><a href="#">Promoción</a></li>
+                                <li><a href="#">Buscar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="cuarto"><i class="icon icon-newspaper"></i></span>Reportes</a></li>
+                        <li><a href="#"><span class="quinto"><i class="icon icon-exit"></i></span>Cerrar Sesión</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+
+        <div class="container" ng-controller="BuscarProductoCtrl">
+            <div class="row">
+                <div class="col col-md-12">
+                    <div class="form form-horizontal jumbotron col-md-push-3" ng-hide="modificar">
+                        <form name="buscarForm" >
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading ">Buscar Productos</div>
+                                <div class="panel-body">
+                                    <div class="input-group formulario">
+                                        <span class="input-group-addon" id="basic-addon3" >Productos</span>
+                                        <select class="form-control">
+                                            <option value="" disabled selected>Seleccione una Opción</option>  
+                                            <option value="ubicacion">Ubicación</option>
+                                            <option value="mesa">Mesa</option>
+                                            <option value="tipoPlato">Tipo de Plato</option>
+                                            <option value="plato">Plato</option>
+                                            <option value="bebida">Bebida</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group formulario">
+                                        <span class="input-group-addon " id="basic-addon1">buscar </span>
+                                        <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                                    </div>
+                                </div>
+                                <!--UBICACIÓN-->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Descripción</th>
+                                            <th>Mesas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ubicacion in ubicaciones | filter: filtro | orderBy: 'ubicación'">
+                                            <td>{{usuario.descripcion}}</td>
+                                            <td>{{usuario.mesa}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                        Accion <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#" ng-click="seleccionar(ubicacion.idUbicacion)" >Modificar</a></li>
+                                                        <li><a href="#" ng-click="eliminarCuenta(ubicacion.idUbicacion);">Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- MESA -->
+                                <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Número</th>
+                                                <th>Descripción</th>
+                                                <th>Ubicación</th>
+                                                <th>Reserva</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="mesa in mesas| filter: filtro | orderBy: 'mesa'">
+                                                <td>{{mesa.numero}}</td>
+                                                <td>{{mesa.descripcion}}</td>
+                                                <td>{{mesa.ubicacion}}</td>
+                                                <td>{{mesa.reserva}}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            Accion <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#" ng-click="seleccionar(mesa.idMesa)" >Modificar</a></li>
+                                                            <li><a href="#" ng-click="eliminarCuenta(mesa.idMesa);">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                                <!-- TIPO DE PLATO -->
+                                <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Plato</th>
+                                                <th>Bebida</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tipoPlato in tiposPlatos| filter: filtro | orderBy: 'tipoPlato'">
+                                                <td>{{tipoPlato.descripcion}}</td>
+                                                <td>{{tipoPlato.plato}}</td>
+                                                <td>{{tipoPlato.bebida}}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            Accion <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#" ng-click="seleccionar(tipoPlato.idTipoPlato)" >Modificar</a></li>
+                                                            <li><a href="#" ng-click="eliminarCuenta(tipoPlato.idTipoPlato);">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                                <!-- PLATO -->
+                                <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Precio</th>
+                                                <th>Tipo de Plato</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="plato in platos| filter: filtro | orderBy: 'plato'">
+                                                <td>{{plato.descripcion}}</td>
+                                                <td>{{plato.precio}}</td>
+                                                <td>{{plato.tipoPlato}}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            Accion <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#" ng-click="seleccionar(plato.idPlato)" >Modificar</a></li>
+                                                            <li><a href="#" ng-click="eliminarCuenta(plato.idPlato);">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                                <!-- BEBIDA -->
+                                <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Precio</th>
+                                                <th>Descripción</th>
+                                                <th>Tipo de Plato</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="bebida in bebidas| filter: filtro | orderBy: 'bebida'">
+                                                <td>{{bebida.nombre}}</td>
+                                                <td>{{bebida.precio}}</td>
+                                                <td>{{bebida.descripcion}}</td>
+                                                <td>{{bebida.tipoPlato}}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            Accion <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#" ng-click="seleccionar(bebida.idBebida)" >Modificar</a></li>
+                                                            <li><a href="#" ng-click="eliminarCuenta(bebida.idBebida);">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="form form-horizontal jumbotron col-md-6 col-md-push-3" ng-show="modificar">
+                    <form name="buscarForm">
+                        <h4>Modificar datos</h4>
+                        <br/>
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon1">Correo electronico</span>
+                            <input type="text" class="form-control" ng-model="usuario.usuario" disabled>
+                        </div>
+                        
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon2"> Contraseña</span>
+                            <input type="password" name="clave" class="form-control" ng-model="usuario.password" ng-pattern="expresionesRegulares.pass" required ng-trim="false"> 
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.clave.$error.required && buscarForm.clave.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.clave.$error.pattern && buscarForm.clave.$touched">
+                            <span class="error" >{{errores.contrasena}}</span>
+                        </div>
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon4">Nombre</span>
+                            <input type="text" name="nombre" class="form-control" ng-model="usuario.nombre" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.nombre.$error.required && buscarForm.nombre.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.nombre.$error.pattern && buscarForm.nombre.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon5">Apellido</span>
+                            <input type="text" name="apellido" class="form-control" ng-model="usuario.apellido"ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.apellido.$error.required && buscarForm.apellido.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.apellido.$error.pattern && buscarForm.apellido.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon6">DNI</span>
+                            <input type="text" name="dni" class="form-control" ng-model="usuario.dni" ng-pattern="expresionesRegulares.number" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.dni.$error.pattern && buscarForm.dni.$touched">
+                            <span class="error" >{{errores.numero}}</span>
+                        </div>
+                       
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon7">Teléfono</span>
+                            <input type="text" name="telefono" class="form-control" ng-model="usuario.telefono" ng-pattern="expresionesRegulares.tel" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.telefono.$error.pattern && buscarForm.telefono.$touched">
+                            <span class="error" >{{errores.tel}}</span>
+                        </div>
+                        
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon8">Calle</span>
+                            <input type="text" name="calle" class="form-control" ng-model="usuario.calle" ng-pattern="expresionesRegulares.text" required ng-trim="false">
+                        </div> 
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.calle.$error.pattern && buscarForm.calle.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon9">Altura</span>
+                            <input type="text" name="altura" class="form-control" ng-model="usuario.altura" ng-pattern="expresionesRegulares.number" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.altura.$error.pattern && buscarForm.altura.$touched">
+                            <span class="error" >{{errores.numero}}</span>
+                        </div>
+                        
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon10">F.Nacimiento</span>
+                            <input type="text" name="fnac" class="form-control" ng-model="usuario.fechaNacimiento" id="fechaNacimiento" >
+                        </div>
+                        
+                        <br>
+                        <div class="botones" align="right">
+                            <button type="button" class="btn btn-default boton" id="guardar" ng-click="actualizarCuenta();">Guardar</button>
+                            <button type="button" class="btn btn-default boton" id="cancelar" ng-click="cancelar();">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="js/usuario.js"></script>
+    <script src="js/app/buscarApp.js"></script>
+
+    <script>
+                                        $(function () {
+                                            var date=new Date();
+                                            var yearRange = "1900:"+date.getFullYear();
+                                            $("#fechaNacimiento").datepicker({
+                                                changeMonth: true,
+                                                changeYear: true,
+                                                yearRange: yearRange
+                                            });
+                                            $("#fechaNacimiento").datepicker("option", "dateFormat", "yy-mm-dd");
+                                        });
+    </script>
+
+</body>
+</html>
+
+

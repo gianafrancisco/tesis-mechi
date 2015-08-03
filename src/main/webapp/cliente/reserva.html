@@ -1,0 +1,55 @@
+
+<div class="row" ng-app="InicioApp" ng-controller="RegistrarReservaCtrl">
+    <div class="col col-md-12" >
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <form name="registrarReservaForm">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">Realice su Reserva:</div>
+                    <div class="panel-body">
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon2">Fecha</span>
+                            <input type="text" name="fecha" class="form-control" id="datepicker" required ng-trim="false" required placeholder="fecha" ng-model="reserva.fecha" ng-change="buscarMesas()">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="registrarReservaForm.fecha.$error.required && registrarReservaForm.fecha.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon3">Hora</span>
+                            <timepicker ng-model="hora" ng-change="buscarMesas()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" readonly-input="true"></timepicker>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon3">Cantidad de Personas</span>
+                            <input type="number" ng-model="reserva.cantidadPersonas" name="cantidad"  min="1" step="1" value="1" class="form-control" id="cant" required ng-trim="false">
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon1">Mesa</span>
+                            <select class="form-control" ng-options="getMesaLabel(mesa) group by mesa.ubicacion.descripcion for mesa in mesasDisponibles" ng-model="reserva.mesa"></select>
+                        </div>
+
+                        <br>
+
+                        <div class="botones" align="right">
+                            <button ng-disabled="!registrarReservaForm.$valid" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                            <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="limpiar()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+        </div>
+    </div>
+</div>  
+<script>
+            $(function () {
+                var dateToday = new Date();
+                $("#datepicker").datepicker();
+                $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+                $("#datepicker").datepicker("option", "minDate", dateToday);
+                //$( "#datepicker" ).datepicker( "setDate", new Date() );
+            });
+</script>

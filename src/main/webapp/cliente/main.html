@@ -1,0 +1,191 @@
+<div class="row" ng-app="InicioApp" ng-controller="RegistrarClienteCtrl">
+    <div class="col col-md-12" >
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3" ng-show="mostrarRegistro && !authenticated">
+            <form name="indexForm" class="form-inline">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading "><h4>Abre una Cuenta</h4></div>
+
+                    <div class="panel-body">
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon3">Cuenta de correo</span>
+                            <input type="text" name="email" class="form-control" ng-change="verificarEmail(cliente.usuario)" ng-model="cliente.usuario" required placeholder="correo electronico" ng-pattern="expresionesRegulares.email" required ng-trim="false"> 
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.email.$error.required && indexForm.email.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.email.$error.pattern && indexForm.email.$touched">
+                            <span class="error" >{{errores.mail}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="mailExiste">
+                            <span class="error">{{errores.mailExiste}}</span>
+                        </div>                           
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon4">Contraseña</span>
+                            <input type="password" name="clave" class="form-control" ng-model="cliente.password" required placeholder="Contraseña" ng-pattern="expresionesRegulares.pass" required ng-trim="false"> 
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.clave.$error.required && indexForm.clave.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.clave.$error.pattern && indexForm.clave.$touched">
+                            <span class="error" >{{errores.contrasena}}</span>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon1">Nombre</span>
+                            <input type="text" name="nombre" class="form-control" ng-model="cliente.nombre" required placeholder="Nombre del usuario" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.nombre.$error.required && indexForm.nombre.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.nombre.$error.pattern && indexForm.nombre.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon2">Apellido</span>
+                            <input type="text" name="apellido" class="form-control" ng-model="cliente.apellido" required placeholder="Apellido del usuario" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.apellido.$error.required && indexForm.apellido.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="indexForm.apellido.$error.pattern && indexForm.apellido.$touched">
+                            <span class="error" >{{errores.apellido}}</span>
+                        </div>
+
+                        <br>
+                        <div class="botones" align="right">
+                            <button ng-disabled="!indexForm.$valid" type="button" class="btn btn-default boton" id="boton1" ng-click="crearCuenta()">Crear cuenta</button>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+        </div>
+        <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro || authenticated">
+            El cliente ha sido creado correctamente, intente loguearse para realizar una reserva.
+        </div>
+
+        <div class="form form-horizontal jumbotron col-md-push-3" ng-show="authenticated">
+            <form name="updateForm">
+                <div class="alert alert-success" role="alert" ng-hide="datosModificados">
+                    Sus datos han sido modificados con éxito. Muchas Gracias.
+                </div>
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading "><h4>Datos Personales</h4></div>
+
+                    <div class="panel-body">
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon " id="basic-addon3">Cuenta de correo</span>
+                            <input type="text" name="email" class="form-control" ng-model="cliente.usuario" required disabled placeholder="correo electronico"> 
+                        </div>
+
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon1" >Nombre</span>
+                            <input type="text" name="nombre" class="form-control" ng-model="cliente.nombre" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.nombre.$error.required && updateForm.nombre.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.nombre.$error.pattern && updateForm.nombre.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon2" >Apellido</span>
+                            <input type="text" name="apellido" class="form-control" ng-model="cliente.apellido" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.apellido.$error.required && updateForm.apellido.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.apellido.$error.pattern && updateForm.apellido.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon3" >Fecha de Nacimiento</span>
+                            <input type="text" name="fnac" class="form-control" id="fechaNacimiento" ng-model="cliente.fechaNacimiento">
+                        </div>
+
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon4" >DNI</span>
+                            <input type="text" name="dni" class="form-control" ng-model="cliente.dni" ng-pattern="expresionesRegulares.number" ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.dni.$error.pattern && updateForm.dni.$touched">
+                            <span class="error" >{{errores.numero}}</span>
+                        </div>
+
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon5" >Teléfono</span>
+                            <input type="text" name="telefono" class="form-control" ng-model="cliente.telefono" ng-pattern="expresionesRegulares.tel" ng-trim="false">
+                        </div> 
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.telefono.$error.pattern && updateForm.telefono.$touched">
+                            <span class="error" >{{errores.tel}}</span>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon6" >Calle</span>
+                            <input type="text" name="calle" class="form-control" ng-model="cliente.calle" ng-pattern="expresionesRegulares.name" ng-trim="false">
+                        </div> 
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.calle.$error.pattern && updateForm.calle.$touched">
+                            <span class="error" >{{errores.nombre}}</span>
+                        </div>
+
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon7" >Altura</span>
+                            <input type="text" name="altura" class="form-control" ng-model="cliente.altura" ng-pattern="expresionesRegulares.number" ng-trim="false">
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.altura.$error.pattern && updateForm.altura.$touched">
+                            <span class="error" >{{errores.numero}}</span>
+                        </div>
+
+                        <br>
+                        <h4>Desea Cambiar su Contraseña?</h4>
+                        <br>
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon10">Nueva Contraseña</span>
+                            <input type="password" name="clave" class="form-control" ng-model="cliente.password" ng-pattern="expresionesRegulares.pass" required ng-trim="false"> 
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.clave.$error.pattern && updateForm.clave.$touched">
+                            <span class="error" >{{errores.campoObligatorio}}</span>
+                        </div>
+                        <div class="alert alert-danger formulario" role="alert" ng-show="updateForm.clave.$error.pattern && updateForm.clave.$touched">
+                            <span class="error" >{{errores.contrasena}}</span>
+                        </div>
+
+
+                        <br>
+
+                        <div class="botones" align="right">
+                            <button type="button" ng-disabled="!updateForm.$valid" class="btn btn-default boton" id="boton1" ng-click="actualizarCuenta();">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var date = new Date();
+        var yearRange = "1900:" + date.getFullYear();
+        $("#fechaNacimiento").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: yearRange
+        });
+        $("#fechaNacimiento").datepicker("option", "dateFormat", "yy-mm-dd");
+    });
+</script>
+
+
+
+

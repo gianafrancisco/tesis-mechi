@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Reservas" table="Reservas">
+        <id name="NroReserva" column="NroReserva">
+            <generator class="native"/>
+        </id>
+        <property name="idMesa" insert="false" update="false"/>
+        <property name="estado"/>
+        <property name="fecha"/>
+        <property name="hora"/>
+        <property name="cantidadPersonas"/>
+        <property name="fechaReserva" type="calendar"/>
+        
+        <many-to-one name="usuario" class="Clientes" column="idUsuario" lazy="false"/>
+        <many-to-one name="mesa" class="Mesas" column="idMesa" lazy="false"/>
+           
+    </class>
+</hibernate-mapping>

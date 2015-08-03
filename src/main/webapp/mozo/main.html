@@ -1,0 +1,133 @@
+
+<div class="row" ng-app="PedidoApp" ng-controller="PedidoCtrl">
+
+    <div class="alert alert-success" role="alert"ng-show="pedidoEnviadoConExito">
+        El pedido ha sido procesado con éxito.
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="tab-content">
+                <ul class="nav nav-tabs ">
+                    <li class="active"><a href="#tabPedido" data-toggle="tab" target="_blank" ng-click="pedidoEnviadoConExito=false">Paso 1 ( Reserva )</a></li>
+                    <li ><a href="#tabMenu" data-toggle="tab" target="_blank" ng-click="pedidoEnviadoConExito=false">Paso 2 ( Seleccionar Menú )</a></li>
+                    <li ><a href="#tabConfirmar" data-toggle="tab" target="_blank">Paso 3 ( Confirmar Pedido )</a></li>
+                </ul>
+
+                <div id="tabPedido" class="tab-pane fade in active">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Pedido</div>
+                        <div class="panel-body">
+                            <form name="pedidoForm">
+                                <div class="row">
+                                    <div class="input-group formulario">
+                                        <span class="input-group-addon" id="basic-addon1">Reserva</span>
+                                        <select class="form-control" ng-options="getReservaLabel(reserva) for reserva in reservas" ng-model="reserva" ng-change="refrescarDatosReserva()">
+                                            <option value="" selected>Sin reserva</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group formulario">
+                                        <span class="input-group-addon" id="basic-addon1">Mesa</span>
+                                        <select class="form-control" ng-model="mesa" ng-options="getMesaLabel(asignacion.mesa) group by agrupar(asignacion) for asignacion in mesas" ng-disabled="reserva != null">
+                                            <option value="" disabled selected>Seleccione una Opción</option>  
+                                        </select>
+                                        <span class="input-group-addon" id="basic-addon2">Personas</span>
+                                        <input type="text" name="cantidad" class="form-control"  required ng-trim="false" required placeholder="cantidad de personas" ng-model="cantidadPersonas" ng-disabled="reserva != null">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tabMenu" class="tab-pane">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Menú</div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <ul class="nav nav-tabs ">
+                                    <li class="active"><a href="#/pedido" data-toggle="tab" ng-click="filtrarPor();">Ver todo</a></li>
+                                    <li ><a href="#/pedido" data-toggle="tab" ng-click="filtrarPorPromociones();">Promociones</a></li>
+                                    <li ng-repeat="tipo in tipoPlatos"><a href="#/pedido" data-toggle="tab" ng-click="filtrarPor(tipo);">{{tipo.descripcion}}</a></li>
+                                </ul>
+                                <div class="tab-pane fade in active" id="menu">
+                                    <p></p>
+                                    <div class="col-md-3" ng-repeat="producto in productos">
+                                        <div class="thumbnail productosBox">
+                                            <div class="caption">
+                                                <p class="titulo">
+                                                    <a href="#/pedido" class="btn btn-primary" role="button" ng-click="agregarProducto(producto);">Agregar</a>
+                                                </p>
+                                                <p class="titulo"><img ng-src="{{getImagen(producto)}}" style="width: 78px;height: 68px;"></img></p>
+                                                <p class="titulo">${{producto.precio}}</p>
+                                                <p class="titulo">{{getDescripcion(producto)}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>    
+                </div>
+                <div id="tabConfirmar" class="tab-pane">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Verificación del Pedido</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="input-group formulario">
+                                    <span class="input-group-addon" id="basic-addon1">Reserva</span>
+                                    <select class="form-control" disabled ng-options="getReservaLabel(reserva) for reserva in reservas" ng-model="reserva" ng-change="refrescarDatosReserva()">
+                                        <option value="" selected>Sin reserva</option>
+                                    </select>
+                                </div>
+                                <div class="input-group formulario">
+                                    <span class="input-group-addon" id="basic-addon1">Mesa</span>
+                                    <select class="form-control" disabled ng-model="mesa" ng-options="getMesaLabel(asignacion.mesa) group by agrupar(asignacion) for asignacion in mesas">
+                                        <option value="" disabled selected>Seleccione una Opción</option>  
+                                    </select>
+                                    <span class="input-group-addon"  id="basic-addon2">Personas</span>
+                                    <input type="text" name="cantidad" class="form-control"  required ng-trim="false" disabled required placeholder="cantidad de personas" ng-model="cantidadPersonas" >
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Tipo</th>
+                                        <th>Cantidad</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in items track by $index">
+                                        <td>{{getDescripcion(item.producto)}}</td>
+                                        <td>{{item.producto.tiposPlatos.descripcion}}</td>
+                                        <td><input type="text" size="2" length="2" ng-model="item.cantidad"></input></td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-default" ng-click="incrementarProducto($index);">Agregar</button>
+                                                <button type="button" class="btn btn-default" ng-click="quitarProducto($index);">Quitar</button>
+                                                <button type="button" class="btn btn-default" ng-click="eliminarProducto($index);">Eliminar</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default" ng-click="enviarPedido();" ng-disabled="items.length == 0">Enviar Pedido</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

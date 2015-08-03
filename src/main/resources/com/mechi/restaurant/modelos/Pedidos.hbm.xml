@@ -1,0 +1,35 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Pedidos" table="Pedidos">
+        <id name="idPedido" column="idPedido">
+            <generator class="native"/>
+        </id>
+
+        <property name="fecha"/>
+        <property name="precio"/>
+        <property name="estado"/>
+        
+        <set name="platos" table="PlatosPedidos" lazy="false">
+            <key column="idPedido" />
+            <many-to-many column="idPlato" class="Platos" />
+        </set>
+
+        <set name="bebidas" table="BebidasPedidos" lazy="false">
+            <key column="idPedido" />
+            <many-to-many column="idBebida" class="Bebidas" />
+        </set>
+        
+        <set name="promociones" table="PromocionesPedidos" lazy="false">
+            <key column="idPedido" />
+            <many-to-many column="idPromocion" class="Promociones" />
+        </set>
+        
+        <many-to-one name="usuario" class="Mozos" column="idUsuario" lazy="false"/>
+        <many-to-one name="reserva" class="Reservas" column="NroReserva" lazy="false"/>
+        <!-- <many-to-one name="ticket" class="Tickets" column="idTicket" not-null="false"/> -->
+        
+    </class>
+</hibernate-mapping>

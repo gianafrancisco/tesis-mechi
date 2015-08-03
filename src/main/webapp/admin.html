@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <title>Rest-aurant</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/estilos/usuarioBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/listados.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/usuarioBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/bebidaBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/ubicacionBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/mesaBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/tipoPlatoBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/platoBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/bebidaBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/promocionBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/asignacionBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/estilos/ticketBootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.min.css" />
+        <link href="bower_components/bootstrap-form-helpers/dist/css/bootstrap-formhelpers.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+        <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+        <style type="text/css">
+            [ng\:cloak], [ng-cloak], .ng-cloak {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body ng-app="UsuarioApp" >
+        <div ng-controller="NavegacionAdminCtrl" ng-cloak class="ng-cloak"> 
+            <nav class="navbar navbar-inverse" role="navigation" ng-show="!authenticated">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Desplegar navegación</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">ADMIN</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                    <form class="navbar-form navbar-right" role="login" ng-show="!authenticated">
+                        <div class="form-group">
+                            <input type="text" name="usuario" class="form-control" placeholder="usuario" ng-model="credentials.username">
+                            <input type="password" name="pass" class="form-control" placeholder="contraseña" ng-model="credentials.password"
+                        </div>
+                        <button class="btn btn-default" ng-click="clienteLogin()">Iniciar Sesión</button>
+                    </form>
+                    <form class="navbar-form navbar-right" role="login" ng-show="authenticated">
+                        <button class="btn btn-default" ng-click="clienteLogout()">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </nav>
+            <div ng-show="authenticated">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><a href="#/main"><span class="primero"><i class="icon icon-home3"></i></span>Inicio</a></li>
+                            <li><a href="#/usuario"><span class="segundo"><i class="icon icon-user"></i></span>Usuarios</a>
+                                <ul>
+                                    <li><a href="#/usuario">Nuevo</a></li>
+                                    <li><a href="#/buscar">Buscar</a></li>
+                                    <li><a href="#/asignacion">Asignar Mozo</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#/ubicacion"><span class="tercero"><i class="icon icon-food"></i></span>Productos</a>
+                                <ul>
+                                    <li><a href="#/ubicacion">Ubicación</a></li>
+                                    <li><a href="#/mesa">Mesa</a></li>
+                                    <li><a href="#/tipoPlato">Tipos de Plato</a></li>
+                                    <li><a href="#/plato">Plato</a></li>
+                                    <li><a href="#/bebida">Bebida</a></li>
+                                    <li><a href="#/promocion">Promoción</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><span class="cuarto"><i class="icon icon-newspaper"></i></span>Reportes</a>
+                                <ul>
+                                    <li><a href="#/ticket">Generar Ticket</a></li>
+                                    <li><a href="#/reporteReservas">Reservas</a></li>
+                                    <li><a href="#/reporteVentas">Ventas</a></li>
+
+                                </ul>
+                            </li>
+                            <li><a href="#" ng-click="clienteLogout();"><span class="quinto"><i class="icon icon-exit"></i></span>Cerrar Sesión</a></li>
+                        </ul>
+                    </nav>
+                </header>
+            </div>
+            <div class="alert alert-danger formulario center-block" style="width: 50%;" role="alert" ng-show="error">
+                <span class="error" >{{errores.passwordIncorrecto}}</span>
+            </div>
+        </div>
+
+        <div class="container ng-cloak" ng-cloak>
+            <ng-view></ng-view>
+        </div>
+        <!--
+                <h1 class="animated slideInLeft uno">Rest</h1><h1 class="animated slideInRight dos">aurant</h1>
+        -->
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui/jquery-ui.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/bootstrap-form-helpers/dist/js/bootstrap-formhelpers.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/Chart.js/Chart.min.js"></script>
+        <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+        <script src="bower_components/angular-file-upload/angular-file-upload.min.js"></script>
+
+        <script src="js/bebida.js"></script>
+        <script src="js/app/bebidaApp.js"></script>
+        <script src="js/usuario.js"></script>
+        <script src="js/app/buscarApp.js"></script>
+        <script src="js/ubicacion.js"></script>
+        <script src="js/app/ubicacionApp.js"></script>
+        <script src="js/mesa.js"></script>
+        <script src="js/app/mesaApp.js"></script>
+        <script src="js/tipoPlato.js"></script>
+        <script src="js/app/tipoPlatoApp.js"></script>
+        <script src="js/plato.js"></script>
+        <script src="js/app/platoApp.js"></script>
+        <script src="js/bebida.js"></script>
+        <script src="js/app/bebidaApp.js"></script>
+        <script src="js/promocion.js"></script>
+        <script src="js/app/promocionApp.js"></script>
+        <script src="js/app/ticketApp.js"></script>
+        <script src="js/app/asignacionApp.js"></script>
+        <script src="js/app/reporteReservasApp.js"></script>
+        <script src="js/app/reporteVentasApp.js"></script>
+
+        <script src="js/usuario.js"></script>
+        <script src="js/app/usuarioApp.js"></script>
+
+    </body>
+</html>

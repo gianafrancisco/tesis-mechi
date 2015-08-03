@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Promociones" table="Promociones">
+        <id name="idPromocion" column="idPromocion">
+            <generator class="native"/>
+        </id>
+        <property name="descripcion"/>
+        <property name="fechaDesde" type="calendar" />
+        <property name="fechaHasta" type="calendar" />
+        <property name="precio"/>
+        <property name="activo"/>
+        
+        <set name="platos" table="PromocionPlato" lazy="false">
+            <key column="idPromocion" />
+            <many-to-many column="idPlato" class="Platos" />
+        </set>
+        
+        <set name="bebidas" table="PromocionBebida" lazy="false">
+            <key column="idPromocion" />
+            <many-to-many column="idBebida" class="Bebidas" />
+        </set>
+
+    </class>
+</hibernate-mapping>

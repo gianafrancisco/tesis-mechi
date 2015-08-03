@@ -1,0 +1,109 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="RegistrarPlatoCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <div ng-hide="agregarModificar">
+                <form name="buscarForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Buscar Platos</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">buscar</span>
+                                <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                            </div>
+                            <br>
+                            <div class="botones" align="right">
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="buscarPlatos();">Buscar</button>
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="nuevaPlato();">Crear nuevo plato</button>
+                            </div>
+                            <br>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Precio</th>
+                                        <th>Tipo de Plato</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="pl in platos| filter: filtro | orderBy: 'descripcion'">
+                                        <td>{{pl.descripcion}}</td>
+                                        <td>{{pl.precio}}</td>
+                                        <td>{{pl.tiposPlatos.descripcion}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Accion <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#/plato" ng-click="seleccionar(pl.idPlato)">Modificar</a></li>
+                                                    <li><a href="#/plato" ng-click="eliminar(pl.idPlato);">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+                                <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarPlatos();" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+
+
+            <div ng-show="agregarModificar">
+                <form name="registrarPlatoForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Registrar Nuevo Plato:</div>
+                        <div class="panel-body">
+                            <br/>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Descripción</span>
+                                <input type="text" name="descripcion" class="form-control" ng-model="plato.descripcion" ng-pattern="expresionesRegulares.name" required ng-trim="false" required placeholder="descripción"> 
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPlatoForm.descripcion.$error.required && registrarPlatoForm.descripcion.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPlatoForm.descripcion.$error.pattern && registrarPlatoForm.descripcion.$touched">
+                                <span class="error" >{{errores.nombre}}</span>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5">Precio</span>
+                                <input type="text" name="precio" class="form-control" ng-model="plato.precio" ng-pattern="expresionesRegulares.price" required ng-trim="false" required placeholder="precio"> 
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPlatoForm.precio.$error.required && registrarPlatoForm.precio.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPlatoForm.precio.$error.pattern && registrarPlatoForm.precio.$touched">
+                                <span class="error" >{{errores.precio}}</span>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" >Tipo de Plato</span>
+                                <select class="form-control" ng-model="plato.tiposPlatos" ng-options="tp.descripcion for tp in tiposPlatos track by tp.idTipoPlato">
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="botones" align="right">
+                                <button ng-disabled="!registrarPlatoForm.$valid" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                                <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+</div>

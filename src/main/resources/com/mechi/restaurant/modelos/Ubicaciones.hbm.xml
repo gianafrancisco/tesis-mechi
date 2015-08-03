@@ -1,0 +1,26 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Ubicaciones" table="Ubicaciones">
+        <id name="idUbicacion" column="idUbicacion">
+            <generator class="native"/>
+        </id>
+        <property name="descripcion"/>
+        <property name="activo"/>
+        
+        <!--
+        <set name="asignaciones" table="Asignaciones">
+                <key column="idUsuario" />
+                <one-to-many column="idAsignacion" class="Asignaciones" />
+        </set>
+        -->
+        <!--
+        <set name="mesas" table="Mesas" lazy="false" inverse="true">
+            <key column="idUbicacion"/>
+            <one-to-many class="Mesas" />
+        </set>
+        -->
+    </class>
+</hibernate-mapping>

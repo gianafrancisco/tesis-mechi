@@ -1,0 +1,58 @@
+
+<div class="row" ng-app="InicioApp" ng-controller="MisReservasCtrl">
+    <div class="col col-md-12">
+        <div class="alert alert-success" role="alert" ng-show="mostrarMensaje">
+            {{mensaje}}
+        </div>
+        <div class="form form-horizontal jumbotron col-md-push-3" ng-hide="modificar">
+            <form name="buscarReservaForm" >
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading ">Mis Reservas</div>
+
+                    <div class="panel-body table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Còdigo</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Personas</th>
+                                    <th>Ubicaciòn</th>
+                                    <th>Mesa</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="reserva in reservas">
+                                    <td>{{reserva.nroReserva}}</td>
+                                    <td>{{reserva.fechaReserva| date: 'yyyy-MM-dd'}}</td>
+                                    <td>{{reserva.fechaReserva| date: 'HH:mm:ss'}}</td>
+                                    <td>{{reserva.cantidadPersonas}}</td>
+                                    <td>{{reserva.mesa.ubicacion.descripcion}}</td>
+                                    <td>{{reserva.mesa.descripcion}}</td>
+                                    <td>{{reserva.estado}}</td>
+                                    <td >
+                                        <div class="btn-group" ng-hide="reserva.estado != 'ACTIVA'">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                Accion <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#" ng-click="cancelar(reserva.nroReserva);">Cancelar</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer ">
+                        <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarReservas()" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

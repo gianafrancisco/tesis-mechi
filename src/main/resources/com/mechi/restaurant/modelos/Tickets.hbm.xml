@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Tickets" table="Tickets">
+        <id name="idTicket" column="idTicket">
+            <generator class="native"/>
+        </id>
+        <property name="fecha" type="calendar"/>
+        
+        <set name="pedidos" table="TicketsPedidos" lazy="false">
+            <key column="idTicket" />
+           <many-to-many class="Pedidos" column="idPedido"/>
+        </set>
+        
+        <!-- <many-to-one name="pedidos" class="Pedidos" column="idTicket" lazy="false"/> -->
+        
+    </class>
+</hibernate-mapping>

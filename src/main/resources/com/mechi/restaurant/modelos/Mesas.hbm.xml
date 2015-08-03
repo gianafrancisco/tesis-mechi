@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Mesas" table="Mesas">
+        <id name="idMesa" column="idMesa">
+            <generator class="native"/>
+        </id>
+        <property name="numero"/>
+        <property name="descripcion"/>
+        <property name="activo"/>
+        <property name="reservarOnline"/>
+        
+        <many-to-one name="ubicacion" class="Ubicaciones" column="idUbicacion" lazy="false"/>
+    </class>
+</hibernate-mapping>

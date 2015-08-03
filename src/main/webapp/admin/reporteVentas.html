@@ -1,0 +1,123 @@
+
+<div class="container" ng-app="UsuarioApp" ng-controller="ReportesVentasCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Reporte de ventas
+        </div>
+        <div class="panel-body">
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Fecha desde</span>
+                <input type="text" id="fechaDesde" ng-model="fechaDesde" class="form-control" placeholder="fecha hasta" aria-describedby="sizing-addon1">
+            </div>
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Fecha hasta</span>
+                <input type="text" id="fechaHasta" ng-model="fechaHasta" class="form-control" placeholder="fecha desde" aria-describedby="sizing-addon1">
+            </div>
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5" >Mozos</span>
+                <select class="form-control" ng-model="mozo" ng-options="getNombreMozo(m) for m in mozos">
+                    <option value="" selected>Seleccione una Opción</option>  
+                </select>
+            </div>
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Buscar</span>
+                <button class="btn btn-primary boton form-control" ng-click="generarReporte();">Ver Reporte</button>
+            </div>
+        </div>
+        <div class="panel-heading">
+            Ventas por mozo
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" data="mozosDatos.data" labels="mozosDatos.labels"></canvas>
+        </div>
+        <div class="panel-heading">
+            Cantidad de promociones vendidas
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="promocionesDatos.series" data="promocionesDatos.data" labels="promocionesDatos.labels"></canvas>
+        </div>
+        <div class="panel-heading">
+            Ventas por promoción
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="promocionesVentasDatos.series" data="promocionesVentasDatos.data" labels="promocionesVentasDatos.labels"></canvas>
+        </div>
+        <div class="panel-heading">
+            Cantidad de platos consumidos
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="platosDatos.series" data="platosDatos.data" labels="platosDatos.labels"></canvas>
+            <!-- <canvas id="bar1" class="chart chart-radar" series="platosDatos.series" data="platosDatos.data" labels="platosDatos.labels"></canvas> -->
+        </div>
+        <div class="panel-heading">
+            Ventas por platos
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="platosVentasDatos.series" data="platosVentasDatos.data" labels="platosVentasDatos.labels"></canvas>
+        </div>
+        <div class="panel-heading">
+            Cantidad de bebidas consumidas
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="bebidasDatos.series" data="bebidasDatos.data" labels="bebidasDatos.labels"></canvas>
+        </div>
+        <div class="panel-heading">
+            Ventas por bebidas
+        </div>
+        <div class="panel-body">
+            <canvas id="bar" class="chart chart-bar" series="bebidasVentasDatos.series" data="bebidasVentasDatos.data" labels="bebidasVentasDatos.labels"></canvas>
+        </div>
+        <!--
+        <div class="tab-content">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tabCantidad" data-toggle="tab" target="_blank" >Cantidad</a></li>
+                <li ><a href="#tabVentas" data-toggle="tab" target="_blank" >Ventas</a></li>
+            </ul>
+            <div id="tabCantidad" class="tab-pane fade in active">
+            </div>
+            <div id="tabVentas" class="tab-pane">
+            </div>
+        </div>
+        -->
+
+        <!--
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Cliente</th>
+                    <th>Mesa</th>
+                    <th>Ubicacion</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reserva in reservas">
+                    <td>{{reserva.fecha}}</td>
+                    <td>{{reserva.hora| limitTo:8}}</td>
+                    <td>{{reserva.usuario.usuario}}</td>
+                    <td>{{reserva.mesa.descripcion}}</td>
+                    <td>{{reserva.mesa.ubicacion.descripcion}}</td>
+                    <td>{{reserva.estado}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        -->
+    </div>  
+</div>
+<script>
+            $(function () {
+                var dateToday = new Date();
+                $("#fechaDesde").datepicker();
+                $("#fechaDesde").datepicker("setDate", dateToday);
+                $("#fechaDesde").datepicker("option", "dateFormat", "yy-mm-dd");
+                $("#fechaHasta").datepicker();
+                $("#fechaHasta").datepicker("setDate", dateToday);
+                $("#fechaHasta").datepicker("option", "dateFormat", "yy-mm-dd");
+            });</script>

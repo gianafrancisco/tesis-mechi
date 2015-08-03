@@ -1,0 +1,112 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="RegistrarTipoPlatoCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <div ng-hide="agregarModificar">
+                <form name="buscarForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Buscar Tipos de Platos</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">buscar</span>
+                                <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                            </div>
+                            <br>
+                            <div class="botones" align="right">
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="buscarTiposPlatos();">Buscar</button>
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="nuevaTipoPlato();">Crear nuevo tipo de plato</button>
+                            </div>
+                            <br>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="tp in tiposPlatos| filter: filtro | orderBy: 'descripcion'">
+                                        <td>{{tp.descripcion}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Accion <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#/tipoPlato" ng-click="seleccionar(tp.idTipoPlato)">Modificar</a></li>
+                                                    <li><a href="#/tipoPlato" ng-click="eliminar(tp.idTipoPlato);">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+                                <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarTiposPlatos();" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div ng-show="agregarModificar">
+                <form name="registrarTipoPlatoForm">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Registrar Nuevo Tipo de Plato:</div>
+                        <div class="panel-body">
+
+                            <div class="input-group formulario">
+
+                                <span class="input-group-addon " id="basic-addon5">Descripción</span>
+                                <input type="text" name="desc" class="form-control" ng-model="tipoPlato.descripcion" ng-change="verificarTipoPlato(tipoPlato.descripcion)" ng-pattern="expresionesRegulares.things" required ng-trim="false" required placeholder="descripción"> 
+                            </div>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Imagen</span>
+                                <!--
+                                <form id="uploadfile" method="POST" enctype="multipart/form-data"
+                                      action="/tipoPlato/upload">
+                                    <input type="hidden" name="name" ng-model="tipoPlato.descripcion" >
+                                    <input type="file" name="file">
+                                    <input type="button" value="Upload" onClick="document.getElementById('uploadfile').submit();">
+                                </form>
+                                -->
+                                <img src="{{getImagen(tipoPlato)}}" style="width: 78px;height: 68px;">
+                                <input type="file" nv-file-select uploader="uploader"/>
+                                <!--
+                                <ul>
+                                    <li ng-repeat="item in uploader.queue">
+                                        Name: <span ng-bind="item.file.name"></span><br/>
+                                        <button ng-click="item.upload()">upload</button>
+                                    </li>
+                                </ul>
+                                -->
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarTipoPlatoForm.desc.$error.required && registrarTipoPlatoForm.desc.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarTipoPlatoForm.desc.$error.pattern && registrarTipoPlatoForm.desc.$touched">
+                                <span class="error" >{{errores.cosas}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="tipoPlatoExiste">
+                                <span class="error">{{errores.tipoPlatoExiste}}</span>
+                            </div>
+                            <br>
+
+                            <div class="botones" align="right">
+                                <button ng-disabled="!registrarTipoPlatoForm.$valid || tipoPlatoExiste" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                                <button type="button" class="btn btn-primary boton" id= "cancelar" ng-click="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+</div>

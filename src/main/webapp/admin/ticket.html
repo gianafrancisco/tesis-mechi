@@ -1,0 +1,61 @@
+
+<div class="row" ng-app="TicketApp" ng-controller="TicketCtrl">
+
+    <div class="alert alert-success" role="alert" ng-show="ticketGenerado">
+        El ticket ha sido generado con éxito.
+    </div>
+    <div class="panel panel-default formulario">
+        <div class="panel-heading formulario">Ticket</div>
+        <div class="panel-body formulario">
+
+
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon1" >Pedidos Entregados</span>
+                <select class="form-control" ng-options="getPedidoTitulo(pedido) group by getMozo(pedido) for pedido in pedidos " ng-model="pedido" ng-change="ticketGenerado = false">
+                </select>
+            </div>
+
+            <div class="input-group formulario">
+                <button type="button" class="btn btn-primary" ng-click="agregar(pedido)">
+                    Agregar a Ticket
+                </button>
+            </div>
+        </div>
+        <div class="panel-heading formulario">Detalle</div>
+
+        <div class="panel-body formulario">
+            <ul class="list-group" ng-repeat="pedido in ticket.pedidos">
+                <li class="list-group-item" ng-repeat="item in pedido.platos">
+                    <span class="badge">{{item.precio}}</span>
+                    {{getDescripcion(item)}}
+                </li>
+                <li class="list-group-item" ng-repeat="item in pedido.bebidas">
+                    <span class="badge">{{item.precio}}</span>
+                    {{getDescripcion(item)}}
+                </li>
+                <li class="list-group-item" ng-repeat="item in pedido.promociones">
+                    <span class="badge">{{item.precio}}</span>
+                    {{getDescripcion(item)}}
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer formulario">
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon1" >Total</span>
+                <input type="text" class="form-control" disabled ng-model="total"></input>
+            </div>
+            <div class="input-group formulario">
+                <button type="button" class="btn btn-primary" ng-click="generarTicket()" ng-disabled="ticket.pedidos == 0">
+                    Generar Ticket
+                </button>
+                <span> </span>
+                <button type="button" class="btn btn-primary" ng-click="limpiarLista()" ng-disabled="ticket.pedidos == 0">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>              
+

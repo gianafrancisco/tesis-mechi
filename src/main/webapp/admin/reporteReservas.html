@@ -1,0 +1,78 @@
+
+<div class="container" ng-app="UsuarioApp" ng-controller="ReportesReservasCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Reporte de reservas
+        </div>
+        <div class="panel-body">
+
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Fecha desde</span>
+                <input type="text" id="fechaDesde" ng-model="fechaDesde" class="form-control" placeholder="fecha hasta" aria-describedby="sizing-addon1">
+            </div>
+            
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Fecha hasta</span>
+                <input type="text" id="fechaHasta" ng-model="fechaHasta" class="form-control" placeholder="fecha desde" aria-describedby="sizing-addon1">
+            </div>
+            
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Turnos</span>
+                <input type="checkbox"  ng-model="filtrarTurnos" aria-describedby="sizing-addon1">Activar filtro de turnos
+            </div>
+            
+            <div class="input-group formulario" ng-show="filtrarTurnos">
+                <span class="input-group-addon" id="basic-addon5">Turno Desde</span>
+                <timepicker ng-model="horaDesde" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" readonly-input="true"></timepicker>
+            </div>
+
+            <div class="input-group formulario" ng-show="filtrarTurnos">
+                <span class="input-group-addon" id="basic-addon5">Turno Hasta</span>
+                <timepicker ng-model="horaHasta" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" readonly-input="true"></timepicker>
+            </div>
+            
+            
+            <div class="input-group formulario">
+                <span class="input-group-addon" id="basic-addon5">Buscar</span>
+                <button class="btn btn-primary boton form-control" ng-click="buscarReservas();">Filtrar</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Cliente</th>
+                    <th>Mesa</th>
+                    <th>Ubicacion</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reserva in reservas">
+                    <td>{{reserva.fechaReserva | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{reserva.fechaReserva | date: 'hh:mm:ss'}}</td>
+                    <td>{{reserva.usuario.usuario}}</td>
+                    <td>{{reserva.mesa.descripcion}}</td>
+                    <td>{{reserva.mesa.ubicacion.descripcion}}</td>
+                    <td>{{reserva.estado}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <div class="panel-footer">
+            <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarReservas()" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+        </div>
+    </div>  
+</div>
+<script>
+            $(function () {
+                var dateToday = new Date();
+                $("#fechaDesde").datepicker();
+                $("#fechaDesde").datepicker("option", "dateFormat", "yy-mm-dd");
+                
+                $("#fechaHasta").datepicker();
+                $("#fechaHasta").datepicker("option", "dateFormat", "yy-mm-dd");
+                
+            });
+</script>

@@ -1,0 +1,198 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="BuscarCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-push-3" ng-hide="modificar">
+            <form name="buscarForm" >
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading ">Buscar usuarios</div>
+                    <div class="panel-body">
+                        <div class="input-group formulario">
+                            <span class="input-group-addon" id="basic-addon5" >Rol</span>
+                            <select class="form-control" ng-model="rol">
+                                <option value="" disabled selected>Seleccione una Opción</option>  
+                                <option value="administrador">Administrador</option>
+                                <option value="mozo">Mozo</option>
+                                <option value="cliente">Cliente</option>
+                            </select>
+                        </div>
+                        <div class="input-group formulario">
+                            <span class="input-group-addon " id="basic-addon5">buscar</span>
+                            <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                        </div>
+                        <!--<div class="input-group formulario">
+                            <span class="input-group-addon " id="basic-addon1"> </span>
+                            <button type="text" name="buscar" class="form-control btn btn-primary" ng-click="listaDeUsuarios();">Buscar</button>
+                        </div>-->
+
+                        <br>
+                        <div class="botones" align="left">
+                            <button type="button" name="buscar" class="btn btn-primary boton" ng-click="listaDeUsuarios();">Buscar</button>
+                        </div>
+                        <br>
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Usuario</th>
+                                    <th>DNI</th>
+                                    <th>Telefono</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="usuario in usuarios| filter: filtro | orderBy: 'usuario'">
+                                    <td>{{usuario.apellido}}</td>
+                                    <td>{{usuario.nombre}}</td>
+                                    <td>{{usuario.usuario}}</td>
+                                    <td>{{usuario.dni}}</td>
+                                    <td>{{usuario.telefono}}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                Accion <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#/buscar" ng-click="seleccionar(usuario.idUsuario)" >Modificar</a></li>
+                                                <li><a href="#/buscar" ng-click="eliminarCuenta(usuario.idUsuario);">Eliminar</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="panel-footer ">
+                            <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="listaDeUsuarios()" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+
+
+            </form>
+        </div>
+    </div>
+
+    <div class="form form-horizontal jumbotron col-md-6 col-md-push-3" ng-show="modificar">
+        <form name="buscarForm">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading ">Modificar datos</div>
+                <div class="panel-body">
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Correo electronico</span>
+                        <input type="text" class="form-control" ng-model="usuario.usuario" disabled>
+                    </div>
+
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5"> Contraseña</span>
+                        <input type="password" name="clave" class="form-control" ng-model="usuario.password" ng-pattern="expresionesRegulares.pass" required ng-trim="false"> 
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.clave.$error.required && buscarForm.clave.$touched">
+                        <span class="error" >{{errores.campoObligatorio}}</span>
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.clave.$error.pattern && buscarForm.clave.$touched">
+                        <span class="error" >{{errores.contrasena}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Nombre</span>
+                        <input type="text" name="nombre" class="form-control" ng-model="usuario.nombre" ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.nombre.$error.required && buscarForm.nombre.$touched">
+                        <span class="error" >{{errores.campoObligatorio}}</span>
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.nombre.$error.pattern && buscarForm.nombre.$touched">
+                        <span class="error" >{{errores.nombre}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Apellido</span>
+                        <input type="text" name="apellido" class="form-control" ng-model="usuario.apellido"ng-pattern="expresionesRegulares.name" required ng-trim="false">
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.apellido.$error.required && buscarForm.apellido.$touched">
+                        <span class="error" >{{errores.campoObligatorio}}</span>
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.apellido.$error.pattern && buscarForm.apellido.$touched">
+                        <span class="error" >{{errores.nombre}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">DNI</span>
+                        <input type="text" name="dni" class="form-control" ng-model="usuario.dni" ng-pattern="expresionesRegulares.number" required ng-trim="false">
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.dni.$error.pattern && buscarForm.dni.$touched">
+                        <span class="error" >{{errores.numero}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Teléfono</span>
+                        <input type="text" name="telefono" class="form-control" ng-model="usuario.telefono" ng-pattern="expresionesRegulares.tel" required ng-trim="false">
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.telefono.$error.pattern && buscarForm.telefono.$touched">
+                        <span class="error" >{{errores.tel}}</span>
+                    </div>
+
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Calle</span>
+                        <input type="text" name="calle" class="form-control" ng-model="usuario.calle" ng-pattern="expresionesRegulares.text" required ng-trim="false">
+                    </div> 
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.calle.$error.pattern && buscarForm.calle.$touched">
+                        <span class="error" >{{errores.nombre}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">Altura</span>
+                        <input type="text" name="altura" class="form-control" ng-model="usuario.altura" ng-pattern="expresionesRegulares.number" required ng-trim="false">
+                    </div>
+                    <div class="alert alert-danger formulario" role="alert" ng-show="buscarForm.altura.$error.pattern && buscarForm.altura.$touched">
+                        <span class="error" >{{errores.numero}}</span>
+                    </div>
+
+                    <div class="input-group formulario">
+                        <span class="input-group-addon" id="basic-addon5">F.Nacimiento</span>
+                        <input type="text" name="fnac" class="form-control" ng-model="usuario.fechaNacimiento" id="fechaNacimiento" >
+                    </div>
+
+                    <br>
+                    <div class="botones" align="right">
+                        <button type="button" class="btn btn-primary boton" id="guardar" ng-click="actualizarCuenta();">Guardar</button>
+                        <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="cancelar();">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui/jquery-ui.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="js/usuario.js"></script>
+<script src="js/app/buscarApp.js"></script>
+
+<script>
+                        $(function () {
+                            var date = new Date();
+                            var yearRange = "1900:" + date.getFullYear();
+                            $("#fechaNacimiento").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                yearRange: yearRange
+                            });
+                            $("#fechaNacimiento").datepicker("option", "dateFormat", "yy-mm-dd");
+                        });
+</script>
+
+</body>
+</html>
+
+-->

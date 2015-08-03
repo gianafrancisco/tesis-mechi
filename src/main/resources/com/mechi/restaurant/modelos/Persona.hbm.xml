@@ -1,0 +1,51 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos" >
+    <class name="Persona" table="Usuarios" discriminator-value="persona">
+        <id name="idUsuario" column="idUsuario">
+            <generator class="native"/>
+        </id>
+        <discriminator column="rol" type="string" />
+        <property name="usuario"/>
+        <property name="password"/>
+        <property name="nombre"/>
+        <property name="apellido"/>
+        <property name="dni"/>
+        <property name="telefono"/>
+        <property name="calle"/>
+        <property name="altura"/>
+        <property name="fechaNacimiento" />
+        <property name="email"/>
+        <property name="activo"/>
+        
+        <subclass name="com.mechi.restaurant.modelos.Usuarios" discriminator-value="administrador">
+
+        </subclass>
+        
+        <subclass name="com.mechi.restaurant.modelos.Mozos" discriminator-value="mozo">
+            <!--
+            <set name="asignaciones" table="Asignaciones">
+                <key column="idUsuario" />
+                <one-to-many column="idAsignacion" class="Asignaciones" />
+            </set>
+
+            <set name="pedidos" table="Pedidos">
+                <key column="idUsuario" />
+                <one-to-many class="Pedidos" />
+            </set>
+            -->
+        </subclass>  
+
+        <subclass name="com.mechi.restaurant.modelos.Clientes" discriminator-value="cliente">
+            <!--
+            <set name="reservas" table="Reservas">
+                <key column="idUsuario" />
+                <one-to-many class="Reservas" />
+            </set>
+            --> 
+        </subclass>
+
+    </class>
+</hibernate-mapping>

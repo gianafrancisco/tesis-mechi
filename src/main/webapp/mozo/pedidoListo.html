@@ -1,0 +1,66 @@
+
+
+<div class="container" ng-app="PedidoListoApp" ng-controller="PedidoListoCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">Pedidos</div>
+        <div class="panel-body">
+            <!-- <div class="row">
+                <div class="col-sm-6 col-md-4"> -->
+            <div class="panel panel-default" ng-repeat="pedido in pedidos">
+                <div class="panel-heading">{{pedido.fecha | date:'yyyy-MM-dd HH:mm:ss'}} {{getPedidoTitulo(pedido)}}</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success" >Platos:</li>
+                        <li class="list-group-item list-group-item-info" ng-repeat="plato in pedido.platos">{{plato.descripcion}}</li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success" >Bebidas:</li>
+                        <li class="list-group-item list-group-item-info" ng-repeat="bebida in pedido.bebidas">{{getDescripcion(bebida)}}</li>
+                    </ul>
+                    <ul class="list-group" ng-repeat="promocion in pedido.promociones">
+                        <li class="list-group-item list-group-item-success" >Promociones:</li>
+                        <li class="list-group-item list-group-item-warning" ng-repeat="plato in promocion.platos">{{promocion.descripcion}}: {{plato.descripcion}}</li>
+                        <li class="list-group-item list-group-item-warning" ng-repeat="bebida in promocion.bebidas">{{promocion.descripcion}}: {{getDescripcion(bebida)}}</li>
+                    </ul>
+
+                    <div class="panel-footer">
+                        <h4>Mozo: {{pedido.usuario.apellido}},{{pedido.usuario.nombre}}</h4>
+
+                        <button type="button" class="btn btn-primary" ng-click="pedidoListo(pedido)">
+                            Entregado
+                        </button>
+                    </div>
+                </div>
+                <!--    </div>
+                </div>-->
+            </div>
+
+
+
+
+            <!--                    <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Número de Pedido</th>
+                                            <th>Ubicación</th>
+                                            <th>Mesa</th>
+                                            <th>Producto</th>
+                                            <th>Tipo</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in items track by $index">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input type="text" size="2" length="2"></input></td>
+                                        </tr>
+                                    </tbody>
+                                </table> -->
+        </div>
+    </div>              
+</div>    
+

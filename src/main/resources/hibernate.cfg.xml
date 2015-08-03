@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hbm2ddl.auto">update</property>
+    <property name="dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
+    <property name="connection.url">jdbc:sqlserver://MECHI-PC; databaseName=Restaurante</property>
+    <property name="connection.username">sa</property>
+    <property name="connection.password">roadrunner</property>
+    <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+    <property name="current_session_context_class">thread</property>
+    <mapping resource="com/mechi/restaurant/modelos/Persona.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Ubicaciones.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Mesas.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Platos.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/TiposPlatos.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Pedidos.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Bebidas.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Tickets.hbm.xml"/>
+    <!--<mapping resource="com/mechi/restaurant/modelos/Clientes.hbm.xml"/>-->
+    <mapping resource="com/mechi/restaurant/modelos/Reservas.hbm.xml"/>
+    <mapping resource="com/mechi/restaurant/modelos/Promociones.hbm.xml"/>
+    <!--<mapping resource="com/mechi/restaurant/modelos/Mozos.hbm.xml"/>-->
+    <mapping resource="com/mechi/restaurant/modelos/Asignaciones.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

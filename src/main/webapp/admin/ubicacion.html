@@ -1,0 +1,90 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="RegistrarUbicacionCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <div ng-hide="agregarModificar">
+                <form name="buscarForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Buscar Ubicaciones</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">buscar</span>
+                                <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                            </div>
+                            <br>
+                            <div class="botones" align="right">
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="buscarUbicaciones();">Buscar</button>
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="nuevaUbicacion();">Crear nueva ubicación</button>
+                            </div>
+                            <br>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="u in ubicaciones| filter: filtro | orderBy: 'descripcion'">
+                                        <td>{{u.descripcion}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Accion <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#ubicacion" ng-click="seleccionar(u.idUbicacion)">Modificar</a></li>
+                                                    <li><a href="#ubicacion" ng-click="eliminar(u.idUbicacion);">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+                                <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarUbicaciones()" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+            </div>        
+            </form>
+            <div ng-show="agregarModificar">
+                <form name="registrarUbicacionForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Registrar Nueva Ubicación:</div>
+                        <div class="panel-body">
+
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">Descripción</span>
+                                <input type="text" name="descripcion" class="form-control" ng-model="ubicacion.descripcion" ng-change="verificarUbicacion(ubicacion.descripcion)" ng-pattern="expresionesRegulares.things" required ng-trim="false" required placeholder="descripción">
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarUbicacionForm.descripcion.$error.required && registrarUbicacionForm.descripcion.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarUbicacionForm.descripcion.$error.pattern && registrarUbicacionForm.descripcion.$touched">
+                                <span class="error" >{{errores.cosas}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="ubicacionExiste">
+                                <span class="error">{{errores.ubicacionExiste}}</span>
+                            </div> 
+                            <br>
+
+                            <div class="botones" align="right">
+                                <button ng-disabled="!registrarUbicacionForm.$valid || ubicacionExiste" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                                <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>    
+    </div>
+</div>

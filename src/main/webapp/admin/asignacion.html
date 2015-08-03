@@ -1,0 +1,89 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="AsignacionCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <!--
+            <div class="alert alert-success" role="alert">
+                La asignación se realizó correctamente
+            </div>
+            -->
+            <div>
+                <form name="registrarAsignacionForm" >
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">Registrar Nueva Asignación:</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon1" >Mozo</span>
+                                <select class="form-control" ng-model="mozo" ng-options="getNombreMozo(m) for m in mozos">
+                                    <option value="" disabled selected>Seleccione una Opción</option>  
+                                </select>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon2" >Turno</span>
+                                <select class="form-control" ng-model="turno">
+                                    <option value="" disabled selected>Seleccione una Opción</option>  
+                                    <option value="mañana">mañana</option>
+                                    <option value="tarde">tarde</option>
+                                    <option value="noche">noche</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon3" >Mesas</span>
+                                <select class="form-control" ng-model="mesa" ng-options="getDescripcionMesa(me) group by me.ubicacion.descripcion for me in mesas">
+                                    <option value="" disabled selected>Seleccione una Opción</option>
+                                </select>
+                            </div>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon4" ></span>
+                                <button class="form-control btn btn-primary" ng-click="asignar();">Asignar mesa</button>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Mesas Asignadas</div>
+                                <div class="panel-body">
+                                </div>
+
+                                <!-- Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Turno</th>
+                                            <th>Mozo</th>
+                                            <th>Mesa</th>
+                                            <th>Ubicación</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="a in asignaciones">
+                                            <td>{{a.turno}}</td>
+                                            <td>{{ getNombreMozo(a.usuario)}}</td>
+                                            <td>{{getDescripcionMesa(a.mesa)}}</td>
+                                            <td>{{a.mesa.ubicacion.descripcion}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false">
+                                                        Acción<span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#/asignacion" ng-click="eliminar(a);">Quitar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="panel-footer ">
+                                    <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarAsignaciones()" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

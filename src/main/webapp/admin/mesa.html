@@ -1,0 +1,113 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="RegistrarMesaCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron col-md-6 col-md-push-3">
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <div ng-hide="agregarModificar">
+                <form name="buscarForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Buscar Mesas</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">buscar</span>
+                                <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                            </div>
+                            <br>
+                            <div class="botones" align="right">
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="buscarMesas();">Buscar</button>
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="nuevaMesa();">Crear nueva mesa</button>
+                            </div>
+                            <br>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Descripción</th>
+                                        <th>Ubicación</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="m in mesas| filter: filtro | orderBy: '-ubicacion.descripcion' | orderBy: '+numero' ">
+                                        <td>{{m.numero}}</td>
+                                        <td>{{m.descripcion}}</td>
+                                        <td>{{m.ubicacion.descripcion}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Accion <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#/mesa" ng-click="seleccionar(m.idMesa)">Modificar</a></li>
+                                                    <li><a href="#/mesa" ng-click="eliminar(m.idMesa);">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+                                <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarMesas();" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </form>    
+            </div>
+
+            <div ng-show="agregarModificar">    
+                <form name="registrarMesaForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Registrar Nueva Mesa:</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Número de Mesa</span>
+                                <input type="text" name="nroMesa" class="form-control" ng-model="mesa.numero" ng-pattern="expresionesRegulares.number" required ng-trim="false" required placeholder="número">
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarMesaForm.nroMesa.$error.required && registrarMesaForm.nroMesa.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarMesaForm.nroMesa.$error.pattern && registrarMesaForm.nroMesa.$touched">
+                                <span class="error" >{{errores.numero}}</span>
+                            </div>
+
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Descripción</span>
+                                <input type="text" name="descripcion" class="form-control" ng-model="mesa.descripcion" ng-pattern="expresionesRegulares.thing" required ng-trim="false" required placeholder="descripción">
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarMesaForm.descripcion.$error.required && registrarMesaForm.descripcion.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarMesaForm.descripcion.$error.pattern && registrarMesaForm.descripcion.$touched">
+                                <span class="error" >{{errores.cosas}}</span>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Reservar Online</span>
+                                <input type="checkbox" name="reservarOnline" class="form-control" ng-model="mesa.reservarOnline">
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" >Ubicación</span>
+                                <select class="form-control" ng-model="mesa.ubicacion" ng-options="u.descripcion for u in ubicaciones track by u.idUbicacion">
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="botones" align="right">
+                                <button ng-disabled="!registrarMesaForm.$valid" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                                <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+</div>

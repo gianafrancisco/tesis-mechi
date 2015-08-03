@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <title>Rest-aurant</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/estilos/clienteBootstrap.css" rel="stylesheet">
+        <link href="css/estilos/misReservasBootstrap.css" rel="stylesheet">
+        <link href="css/estilos/reservaBootstrap.css" rel="stylesheet">
+        <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <link href="bower_components/bootstrap-form-helpers/dist/css/bootstrap-formhelpers.min.css" rel="stylesheet">
+        <style type="text/css">
+            [ng\:cloak], [ng-cloak], .ng-cloak {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body ng-app="InicioApp">
+        <div ng-controller="NavegacionCtrl" ng-cloak class="ng-cloak"> 
+            <nav class="navbar navbar-inverse" role="navigation" ng-cloak>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Desplegar navegación</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/" ng-click="buscarCliente();">BIENVENIDOS</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav" ng-show="authenticated">
+                        <li><a href="#/main" ng-click="buscarCliente();">Modificar Datos</a></li>
+                        <li><a href="#/menu">Ver Menú</a></li>  <!-- class="active"-->
+                        <li><a href="#/reserva">Reservar</a></li>
+                        <li><a href="#/misReservas">Mis Reservas</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" role="login" ng-show="!authenticated">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="usuario" ng-model="credentials.username">
+                            <input type="password" class="form-control" placeholder="contraseña" ng-model="credentials.password">
+                        </div>
+                        <button class="btn btn-default" ng-click="clienteLogin()">Iniciar Sesión</button>
+                    </form>
+                    <form class="navbar-form navbar-right" role="login" ng-show="authenticated">
+                        <button class="btn btn-default" ng-click="clienteLogout()">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </nav>
+            <div class="alert alert-danger formulario center-block" style="width: 50%;" role="alert" ng-show="error" ng-cloak>
+                <span class="error" >{{errores.passwordIncorrecto}}</span>
+            </div>
+        </div>
+
+        <div class="container" ng-cloak class="ng-cloak">
+            <ng-view ></ng-view>
+        </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery-ui/jquery-ui.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/bootstrap-form-helpers/dist/js/bootstrap-formhelpers.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="js/cliente.js"></script>
+        <script src="js/reserva.js"></script>
+        <script src="js/usuario.js"></script>
+        <script src="js/app/menuApp.js"></script>
+        <script src="js/app/misReservasApp.js"></script>
+        <script src="js/app/reservaApp.js"></script>
+        <script src="js/app/clienteApp.js"></script>
+
+        <script>
+                $(function () {
+                    var date = new Date();
+                    var yearRange = "1900:" + date.getFullYear();
+                    $("#fechaNacimiento").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        yearRange: yearRange
+                    });
+                    $("#fechaNacimiento").datepicker("option", "dateFormat", "yy-mm-dd");
+                });
+        </script>
+    </body>
+</html>
+
+
+
+

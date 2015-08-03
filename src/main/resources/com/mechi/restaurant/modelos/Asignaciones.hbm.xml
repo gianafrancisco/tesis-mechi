@@ -1,0 +1,15 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.mechi.restaurant.modelos">
+    <class name="Asignaciones" table="Asignaciones">
+        <id name="idAsignacion" column="idAsignacion">
+            <generator class="native"/>
+        </id>
+        <property name="turno"/>
+        
+        <many-to-one name="usuario" class="Mozos" column="idUsuario" lazy="false"/>
+        <many-to-one name="mesa" class="Mesas" column="idMesa" lazy="false"/>
+    </class>
+</hibernate-mapping>

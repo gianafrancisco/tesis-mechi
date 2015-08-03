@@ -1,0 +1,37 @@
+body{
+    background: url('../../images/FondoResto2.jpg');
+    background-repeat: repeat-y;
+    background-attachment: fixed;
+    //background-position: left bottom;
+    //background-size: 100% 100%;
+}
+
+.formulario{
+    width: 100%;
+}
+
+#basic-addon1, #basic-addon2, #basic-addon3,  #basic-addon4, #basic-addon5, #basic-addon6, #basic-addon7{
+    width: 40%;
+}
+
+#basic-addon8, #basic-addon9, #basic-addon10{
+    width: 50%;
+}
+
+/*.opcion{
+    width: 50px;
+}*/
+
+#boton1, #boton2, #boton3{
+    background-color: #ccccff;
+    color: black;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.panel-heading{
+    font-size: 2.4rem;
+}
+
+
+
+

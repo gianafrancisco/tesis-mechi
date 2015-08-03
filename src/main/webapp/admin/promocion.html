@@ -1,0 +1,185 @@
+
+<div class="row" ng-app="UsuarioApp" ng-controller="RegistrarPromocionCtrl">
+    <div class="col col-md-12">
+        <div class="form form-horizontal jumbotron" >
+            <!-- <div class="form form-horizontal jumbotron col-md-6 col-md-push-3" > -->
+            <div class="alert alert-success" role="alert" ng-hide="mostrarRegistro">
+                {{mensaje}}
+            </div>
+            <div ng-hide="agregarModificar">
+                <form name="buscarForm" >
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">Buscar Promociones</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon1">buscar</span>
+                                <input type="text" name="buscar" class="form-control" ng-model="filtro">
+                            </div>
+                            <br>
+                            <div class="botones" align="right">
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="buscarPromociones();">Buscar</button>
+                                <button type="button" name="buscar" class="btn btn-primary boton" ng-click="nuevaPromocion();">Crear nueva promoción</button>
+                            </div>
+                            <br>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Promoción</th>
+                                        <th>Precio</th>
+                                        <th>Vigencia</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in promociones| filter: filtro | orderBy: 'descripcion'">
+                                        <td>{{p.descripcion}}</td>
+                                        <td>{{p.precio}}</td>
+                                        <td>{{p.fechaDesde | date: 'yyyy-MM-dd'}} - {{p.fechaHasta | date: 'yyyy-MM-dd'}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Accion <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#/promocion" ng-click="seleccionar(p.idPromocion)" >Modificar</a></li>
+                                                    <li><a href="#/promocion" ng-click="eliminar(p.idPromocion);">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+                                <pagination direction-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="buscarPromociones();" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div ng-show="agregarModificar">
+                <form name="registrarPromocionForm" >
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">Registrar Nueva Promoción:</div>
+                        <div class="panel-body">
+                            <div class="input-group formulario">
+                                <span class="input-group-addon " id="basic-addon5">Descripción</span>
+                                <input type="text" name="descripcion" class="form-control" ng-model="promocion.descripcion" ng-change="verificarPromocion(promocion.descripcion)" ng-pattern="expresionesRegulares.thing" required ng-trim="false" required placeholder="descripción">
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPromocionForm.descripcion.$error.required && registrarPromocionForm.descripcion.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPromocionForm.descripcion.$error.pattern && registrarPromocionForm.descripcion.$touched">
+                                <span class="error" >{{errores.cosas}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="promocionExiste">
+                                <span class="error">{{errores.promocionExiste}}</span>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5">Precio</span>
+                                <input type="text" name="precio" class="form-control" ng-model="promocion.precio" ng-pattern="expresionesRegulares.price" required ng-trim="false" required placeholder="precio">
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPromocionForm.precio.$error.required && registrarPromocionForm.precio.$touched">
+                                <span class="error" >{{errores.campoObligatorio}}</span>
+                            </div>
+                            <div class="alert alert-danger formulario" role="alert" ng-show="registrarPromocionForm.precio.$error.pattern && registrarPromocionForm.precio.$touched">
+                                <span class="error" >{{errores.precio}}</span>
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" >Platos</span>
+                                <select class="form-control" ng-options="plato.descripcion group by plato.tiposPlatos.descripcion for plato in platos" ng-model="platoSeleccionado"></select>
+                            </div>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" ></span>
+                                <button class="form-control btn btn-primary" ng-click="agregarPlatoAPromocion()">Añadir plato a la promocion</button>
+                            </div>
+
+                            <ul class="list-group formulario">
+                                <li class="list-group-item disabled">
+                                    Productos añadidos a la promoción
+                                </li>
+                                <li class="list-group-item" ng-repeat="p in promocion.platos">
+                                    {{$index + 1}} - {{p.descripcion}} ( {{p.tiposPlatos.descripcion}} )
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false">
+                                            Acción<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#/promocion" ng-click="quitarPlato($index)">Quitar</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" >Bebidas</span>
+                                <select class="form-control" ng-options="bebida.nombre group by bebida.tiposPlatos.descripcion for bebida in bebidas" ng-model="bebidaSeleccionado"></select>
+                            </div>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5" ></span>
+                                <button class="form-control btn btn-primary" ng-click="agregarBebidaAPromocion()">Añadir bebida a la promocion</button>
+                            </div>
+
+                            <ul class="list-group formulario">
+                                <li class="list-group-item disabled">
+                                    Bebidas Añadidas a la promoción
+                                </li>
+                                <li class="list-group-item" ng-repeat="b in promocion.bebidas">
+                                    {{$index + 1}} - {{b.nombre}} ( {{b.descripcion}} )
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false">
+                                            Acción<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#/promocion" ng-click="quitarBebida($index)">Quitar</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <br>
+                            <h4 class="panel-heading">Vigencia de la Promoción:</h4>
+                            <br>
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5">Desde</span>
+                                <input type="datetime" name="fdesde" class="form-control" ng-model="fechaDesde" id="fechaDesde"  placeholder="fecha desde">
+                            </div>
+
+                            <div class="input-group formulario">
+                                <span class="input-group-addon" id="basic-addon5">Hasta</span>
+                                <input type="datetime" name="fhasta" class="form-control" ng-model="fechaHasta" id="fechaHasta"  placeholder="fecha hasta">
+                            </div>   
+                            <br>
+
+                            <div class="botones" align="right">
+                                <button ng-disabled="!registrarPromocionForm.$valid || promocionExiste" type="button" class="btn btn-primary boton" id="guardar" ng-click="guardar();">Guardar</button>
+                                <button type="button" class="btn btn-primary boton" id="cancelar" ng-click="cancelar()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+            var date = new Date();
+            var yearRange = "1900:" + date.getFullYear();
+            $("#fechaDesde").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: yearRange
+            });
+            $("#fechaDesde").datepicker("option", "dateFormat", "yy-mm-dd");
+
+            //var date2 = new Date();
+            var yearRange2 = "1900:" + date.getFullYear();
+            $("#fechaHasta").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: yearRange2
+            });
+            $("#fechaHasta").datepicker("option", "dateFormat", "yy-mm-dd");
+</script>
