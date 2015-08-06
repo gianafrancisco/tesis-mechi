@@ -1,8 +1,7 @@
 package com.mechi.restaurant.DAO;
 
 import com.mechi.restaurant.modelos.*;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.validation.ConstraintViolationException;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,7 +49,7 @@ public class DAO {
     }
 
     //UBICACIONES
-    public ArrayList<Ubicaciones> getUbicaciones(final int currentPage, final int itemsPerPage) {
+    public List<Ubicaciones> getUbicaciones(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List ubicaciones = null;
@@ -68,8 +67,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Ubicaciones>) ubicaciones;
         }
+        return ubicaciones;
     }
 
     public Ubicaciones getUbicacion(int id) {
@@ -87,12 +86,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return ubicaciones;
         }
+        return ubicaciones;
     }
 
     //MESAS
-    public ArrayList<Mesas> getMesas(final int currentPage, final int itemsPerPage) {
+    public List<Mesas> getMesas(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List mesas = null;
@@ -111,10 +110,10 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Mesas>) mesas;
+        return mesas;
     }
 
-    public ArrayList<Mesas> getMesasSinReservas(String fecha, String hora) throws ParseException {
+    public List<Mesas> getMesasSinReservas(String fecha, String hora) throws ParseException {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List mesas = null;
@@ -146,7 +145,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Mesas>) mesas;
+        return mesas;
     }
 
     public Mesas getMesa(int id) {
@@ -164,12 +163,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return mesas;
         }
+        return mesas;
     }
 
     //PEDIDOS
-    public ArrayList<Pedidos> getPedidos() {
+    public List<Pedidos> getPedidos() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List pedidos = null;
@@ -184,11 +183,11 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Pedidos>) pedidos;
         }
+        return pedidos;
     }
 
-    public ArrayList<Pedidos> getPedidos(HashMap<String, String> filtro) throws ParseException {
+    public List<Pedidos> getPedidos(HashMap<String, String> filtro) throws ParseException {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List pedidos = null;
@@ -216,10 +215,10 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Pedidos>) pedidos;
+        return pedidos;
     }
 
-    public ArrayList<Pedidos> getPedidosEnCocina() {
+    public List<Pedidos> getPedidosEnCocina() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List pedidos = null;
@@ -234,11 +233,11 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Pedidos>) pedidos;
         }
+        return pedidos;
     }
 
-    public ArrayList<Pedidos> getPedidosListo(int idUsuario) {
+    public List<Pedidos> getPedidosListo(int idUsuario) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List pedidos = null;
@@ -255,11 +254,11 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Pedidos>) pedidos;
         }
+        return pedidos;
     }
 
-    public ArrayList<Pedidos> getPedidosEntregado() {
+    public List<Pedidos> getPedidosEntregado() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List pedidos = null;
@@ -274,8 +273,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Pedidos>) pedidos;
         }
+        return pedidos;
     }
 
     public Pedidos getPedido(int id) {
@@ -293,12 +292,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return pedidos;
         }
+        return pedidos;
     }
 
     //PLATOS
-    public ArrayList<Platos> getPlatos(final int currentPage, final int itemsPerPage) {
+    public List<Platos> getPlatos(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List platos = null;
@@ -316,8 +315,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Platos>) platos;
         }
+        return platos;
     }
 
     public Platos getPlato(int id) {
@@ -335,12 +334,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return platos;
         }
+        return platos;
     }
 
     //TIPOSPLATOS
-    public ArrayList<TiposPlatos> getTiposPlatos(final int currentPage, final int itemsPerPage) {
+    public List<TiposPlatos> getTiposPlatos(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List tiposPlatos = null;
@@ -358,8 +357,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<TiposPlatos>) tiposPlatos;
         }
+        return tiposPlatos;
     }
 
     public TiposPlatos getTiposPlato(int id) {
@@ -377,19 +376,19 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return tiposPlatos;
         }
+        return tiposPlatos;
     }
 
     //USUARIOS
-    public ArrayList<Usuarios> getUsuarios(final int currentPage, final int itemsPerPage, final String filter) {
+    public List<Usuarios> getUsuarios(final int currentPage, final int itemsPerPage, final String filter) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List usuarios = null;
         try {
             tx = session.beginTransaction();
             Criteria c = session.createCriteria(Usuarios.class);
-            c.add(Restrictions.eq("activo", new Boolean(Boolean.TRUE)));
+            c.add(Restrictions.eq("activo", Boolean.TRUE));
             if (!filter.equals("")) {
                 c.add(Restrictions.or(
                         Restrictions.like("usuario", "%" + filter + "%"),
@@ -412,8 +411,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Usuarios>) usuarios;
         }
+        return usuarios;
     }
 
     public Usuarios getUsuario(int id) {
@@ -431,12 +430,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return usuarios;
         }
+        return usuarios;
     }
 
     //BEBIDAS
-    public ArrayList<Bebidas> getBebidas(final int currentPage, final int itemsPerPage) {
+    public List<Bebidas> getBebidas(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List bebidas = null;
@@ -454,8 +453,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Bebidas>) bebidas;
         }
+        return  bebidas;
     }
 
     public Bebidas getBebida(int id) {
@@ -473,12 +472,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return bebidas;
         }
+        return bebidas;
     }
 
     //TICKETS
-    public ArrayList<Tickets> getTickets() {
+    public List<Tickets> getTickets() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List tickets = null;
@@ -493,8 +492,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Tickets>) tickets;
         }
+        return tickets;
     }
 
     public Tickets getTicket(int id) {
@@ -512,19 +511,19 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return tickets;
         }
+        return tickets;
     }
 
     //CLIENTES
-    public ArrayList<Clientes> getClientes(final int currentPage, final int itemsPerPage, final String filter) {
+    public List<Clientes> getClientes(final int currentPage, final int itemsPerPage, final String filter) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List clientes = null;
         try {
             tx = session.beginTransaction();
             Criteria c = session.createCriteria(Clientes.class);
-            c.add(Restrictions.eq("activo", new Boolean(Boolean.TRUE)));
+            c.add(Restrictions.eq("activo", Boolean.TRUE));
             if (!filter.equals("")) {
                 c.add(Restrictions.or(
                         Restrictions.like("usuario", "%" + filter + "%"),
@@ -547,8 +546,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Clientes>) clientes;
         }
+        return clientes;
     }
 
     public Clientes getCliente(int id) {
@@ -566,8 +565,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return clientes;
         }
+        return clientes;
     }
 
     public Persona getUsuarioPorNombre(String username) {
@@ -592,7 +591,7 @@ public class DAO {
     }
 
     //RESERVAS
-    public ArrayList<Reservas> getReservas(HashMap<String, String> filtro, final int currentPage, final int itemsPerPage) throws ParseException {
+    public List<Reservas> getReservas(HashMap<String, String> filtro, final int currentPage, final int itemsPerPage) throws ParseException {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List reservas = null;
@@ -605,7 +604,7 @@ public class DAO {
         Date hasta = format.parse(fechaHasta + " " + horaHasta);
         try {
             tx = session.beginTransaction();
-            
+
             Query q = session.createQuery("FROM Reservas as r WHERE "
                     + "day(r.fechaReserva) >= day(:fechaDesde) AND "
                     + "day(r.fechaReserva) <= day(:fechaHasta) AND "
@@ -632,7 +631,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Reservas>) reservas;
+        return reservas;
     }
 
     public int getSizeReservasEntreFechas(HashMap<String, String> filtro) throws ParseException {
@@ -701,7 +700,7 @@ public class DAO {
         return count;
     }
 
-    public ArrayList<Reservas> getReservasActivas() {
+    public List<Reservas> getReservasActivas() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         Calendar c = Calendar.getInstance();
@@ -729,7 +728,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Reservas>) reservas;
+        return reservas;
     }
 
     public ArrayList<Reservas> getReservasActivasPorMozo(int idMozo) {
@@ -801,7 +800,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Reservas>) reservas;
+        return reservas;
     }
 
     public long getSizeReservasPorUsuario(final int id) {
@@ -868,7 +867,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Reservas>) reservas;
+        return reservas;
     }
 
     public Reservas getReserva(int id) {
@@ -886,12 +885,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return reservas;
         }
+        return reservas;
     }
 
     //PROMOCIONES
-    public ArrayList<Promociones> getPromociones(final int currentPage, final int itemsPerPage) {
+    public List getPromociones(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List promociones = null;
@@ -909,11 +908,11 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Promociones>) promociones;
         }
+        return promociones;
     }
 
-    public ArrayList<Promociones> getPromocionesDisponibles(final int currentPage, final int itemsPerPage) {
+    public List getPromocionesDisponibles(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
@@ -935,8 +934,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Promociones>) promociones;
         }
+        return promociones;
     }
 
     public Promociones getPromocion(int id) {
@@ -954,18 +953,18 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return promociones;
         }
+        return promociones;
     }
 
     //MOZOS
-    public ArrayList<Mozos> getMozos(final int currentPage, final int itemsPerPage, final String filter) {
+    public List getMozos(final int currentPage, final int itemsPerPage, final String filter) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List mozos = null;
         Query q = null;
         Criteria c = session.createCriteria(Mozos.class);
-        c.add(Restrictions.eq("activo", new Boolean(Boolean.TRUE)));
+        c.add(Restrictions.eq("activo", Boolean.TRUE));
         try {
             tx = session.beginTransaction();
             if (!filter.equals("")) {
@@ -990,8 +989,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return (ArrayList<Mozos>) mozos;
         }
+        return mozos;
     }
 
     public Mozos getMozo(int id) {
@@ -1009,12 +1008,12 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return mozos;
         }
+        return mozos;
     }
 
     //ASIGNACIONES
-    public ArrayList<Asignaciones> getAsignaciones(final int currentPage, final int itemsPerPage) {
+    public List getAsignaciones(final int currentPage, final int itemsPerPage) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List asignaciones = null;
@@ -1033,10 +1032,10 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Asignaciones>) asignaciones;
+        return asignaciones;
     }
 
-    public ArrayList<Asignaciones> getAsignacionesPorMozo(final int idMozo) {
+    public List getAsignacionesPorMozo(final int idMozo) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         List asignaciones = null;
@@ -1054,7 +1053,7 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (ArrayList<Asignaciones>) asignaciones;
+        return asignaciones;
     }
 
     public Asignaciones getAsignacion(int id) {
@@ -1072,8 +1071,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return asignaciones;
         }
+        return asignaciones;
     }
 
     //INSERTS
@@ -1110,8 +1109,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return personas.size() > 0;
         }
+        return personas != null && personas.size() > 0;
     }
 
     //VALIDAR UBICACIONES
@@ -1130,8 +1129,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return descripciones.size() > 0;
         }
+        return descripciones != null && descripciones.size() > 0;
     }
 
     //VALIDAR TIPOS DE PLATOS
@@ -1150,8 +1149,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return descripciones.size() > 0;
         }
+        return descripciones != null && descripciones.size() > 0;
     }
 
     //VALIDAR PROMOCIÓN
@@ -1170,8 +1169,8 @@ public class DAO {
             e.printStackTrace();
         } finally {
             session.close();
-            return promociones.size() > 0;
         }
+        return promociones != null && promociones.size() > 0;
     }
 
     //OPEN SESSION
@@ -1208,7 +1207,7 @@ public class DAO {
             c.setProjection(Projections.rowCount());
 
             if (!filter.equals("")) {
-                c.add(Restrictions.eq("activo", new Boolean(Boolean.TRUE)));
+                c.add(Restrictions.eq("activo", Boolean.TRUE));
                 c.add(Restrictions.or(
                         Restrictions.like("usuario", "%" + filter + "%"),
                         Restrictions.like("nombre", "%" + filter + "%"),
@@ -1231,6 +1230,6 @@ public class DAO {
         } finally {
             session.close();
         }
-        return (Long) rowCount.get(0);
+        return (Long) (rowCount != null ? rowCount.get(0) : 0);
     }
 }

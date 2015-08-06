@@ -29,7 +29,7 @@ public class MozoController {
         return json;
     }
     @RequestMapping("/mesas/{idMozo}")
-    public ArrayList<Mesas> getMesasPorMozo(@PathVariable("idMozo") int idMozo) {
+    public List<Mesas> getMesasPorMozo(@PathVariable("idMozo") int idMozo) {
         return DAO.getInstance().getMesas(1,1000);
     }
     @RequestMapping("/agregar")

@@ -2,14 +2,10 @@ package com.mechi.rest.controllers;
 
 import com.mechi.restaurant.DAO.DAO;
 import com.mechi.restaurant.modelos.Asignaciones;
-import com.mechi.restaurant.modelos.Mesas;
-import com.mechi.restaurant.modelos.Mozos;
 import com.mechi.restaurant.modelos.Persona;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.validation.ConstraintViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
