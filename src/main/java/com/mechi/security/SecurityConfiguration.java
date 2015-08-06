@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/cliente/index.html","/cliente/menu.html","/cliente/misReservas.html","/cliente/reserva.html").access("hasRole('CLIENTE')")
                 .antMatchers("/cliente/**").access("hasRole('CLIENTE')")
                 .antMatchers("/mozo/index.html","/mozo/main.html").access("hasRole('MOZO')")
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/admin/**","/cliente/**").access("hasRole('ADMIN')")
                 .anyRequest()
                 .authenticated().and()
                 .logout().logoutSuccessUrl("/")
