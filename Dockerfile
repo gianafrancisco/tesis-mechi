@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 RUN     echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections && \
 	echo "mysql-server mysql-server/root_password_again password toor" | debconf-set-selections && \
-	apt-get -y install mysql-server && sh /mysqlSchema.sh
+	apt-get -y install mysql-server && sh /opt/mysqlSchema.sh
 
 EXPOSE 8080
 
