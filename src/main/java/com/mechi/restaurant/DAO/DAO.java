@@ -576,7 +576,8 @@ public class DAO {
         try {
             tx = session.beginTransaction();
             Query q = session.createQuery("FROM Persona WHERE usuario = :usuario").setParameter("usuario", username);
-            clientes = (Persona) q.list().get(0);
+            if(q.list().size() > 0)
+                clientes = (Persona) q.list().get(0);
             tx.commit();
 
         } catch (HibernateException e) {

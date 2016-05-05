@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/js/**","/images/**","/css/**","/bower_components/**","/cocina/**","/pedido/cocina","/pedidos/listo/**","index.html","/index.html","/error.html","/error","/cliente/main.html","/cliente/agregar").permitAll()
                 .antMatchers("/admin.html","/admin/main.html","/tipoPlato/upload","/pedido/listo/**").permitAll()
                 .antMatchers("/mozo.html","/mozo/main.html","/validar/email").permitAll()
-                //.antMatchers("/cliente/index.html","/cliente/menu.html","/cliente/misReservas.html","/cliente/reserva.html").access("hasRole('CLIENTE')")
+                .antMatchers("/cliente/index.html","/cliente/menu.html","/cliente/misReservas.html","/cliente/reserva.html","/cliente/modificar/**").access("hasRole('CLIENTE')")
                 .antMatchers("/cliente/**").access("hasRole('CLIENTE')")
                 .antMatchers("/mozo/index.html","/mozo/main.html").access("hasRole('MOZO')")
                 .antMatchers("/admin/**","/cliente/**").access("hasRole('ADMIN')")
