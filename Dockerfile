@@ -8,7 +8,7 @@ MAINTAINER Francisco Giana <gianafrancisco@gmail.com>
 
 RUN apt-get update && \
 	apt-get -y install default-jre && \
-	chmo a+x /opt/*.sh
+	chmod a+x /opt/*.sh
 
 RUN     echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections && \
 	echo "mysql-server mysql-server/root_password_again password toor" | debconf-set-selections && \
