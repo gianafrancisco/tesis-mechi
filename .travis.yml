@@ -1,0 +1,22 @@
+sudo: required
+
+language: java
+
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+before_install:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+after_success:
+  - docker build -t fgiana/restaurant .
+  - docker run --name restaurant -d -P fgiana/restaurant
+  - docker ps
+  - docker port restaurant
+  - docker push fgiana/restaurant
+
