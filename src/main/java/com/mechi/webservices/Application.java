@@ -15,7 +15,7 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
-        if(DAO.getInstance().getUsuarioPorNombre("admin") == null){
+        /*if(DAO.getInstance().getUsuarioPorNombre("admin") == null){
             Usuarios u = new Usuarios();
             u.setEmail("admin@admin.com");
             u.setNombre("admin");
@@ -24,6 +24,6 @@ public class Application {
             u.setPassword("admin");
             u.setRol("ADMIN");
             DAO.getInstance().add(u);
-        }
+        }*/
     }
 }
