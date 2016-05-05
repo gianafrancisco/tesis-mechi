@@ -19,6 +19,7 @@ public class Application {
             Usuarios u = new Usuarios();
             u.setEmail("admin@admin.com");
             u.setNombre("admin");
+            u.setUsuario("admin@admin.com");
             u.setActivo(true);
             u.setPassword("admin");
             u.setRol("ADMIN");

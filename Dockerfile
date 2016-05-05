@@ -10,7 +10,7 @@ RUN apt-get update && \
 	apt-get -y install default-jre && \
 	chmod a+x /opt/*.sh
 
-RUN     echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections && \
+RUN echo "mysql-server mysql-server/root_password password toor" | debconf-set-selections && \
 	echo "mysql-server mysql-server/root_password_again password toor" | debconf-set-selections && \
 	apt-get -y install mysql-server && sh /opt/mysqlSchema.sh
 
